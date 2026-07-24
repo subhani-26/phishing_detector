@@ -73,6 +73,7 @@ def extract_features_from_url(url: str) -> dict:
     # 13. page_rank — unknown for real-time, use neutral value
     # (would need Google API for real value)
     page_rank = 2
+    
 
     # 14. nb_redirection
     nb_redirection = url.count('//')  - 1  # subtract protocol //
@@ -200,3 +201,5 @@ if __name__ == "__main__":
         print(f"  Confidence: {result['confidence']}% phishing probability")
         print(f"  Risk:       {result['risk_level']}")
         print(f"  Warnings:   {result['warnings']}")
+        
+        
