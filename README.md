@@ -68,6 +68,6 @@ phishing_detector/
 ├── app.py
 └── requirements.txt
 
-## Internship
-Cybersecurity Internship — Apex Skill Technologies
-April – June 2026
+## Summer Internship
+Rgukt Nuzvid
+
