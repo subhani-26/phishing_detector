@@ -17,7 +17,7 @@ sys.path.insert(0, '.')
 from src.feature_extraction import load_and_select_features
 from src.data_processing import check_data_quality, clean_data, split_and_scale
 
-
+#used for getting models
 def get_models() -> dict:
     """
     Define all 4 models we want to compare.
