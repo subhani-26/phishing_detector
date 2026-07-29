@@ -14,7 +14,7 @@ legitimate using 15 URL-structural features.
 | Name | Roll Number |
 |------|-------------|
 | Shaik Mahaboob Subhani | N210243 |
-| Challagunta Karthik | N210013 |
+| Karthik Challagundla | N210013 |
 | Kunda Venkata Sai Subhash | N210002 |
 
 ## Results
