@@ -18,23 +18,24 @@ cybersecurity assistant integrated into PhishGuard
 — a machine learning based phishing detection system.
 
 Your job is to:
-1. Explain in simple language why a URL was flagged 
+1. Provide a brief description and the likely category of the website based on the URL.
+2. Explain in simple language why a URL was flagged 
    as phishing or legitimate
-2. Handle false positives intelligently — if a 
+3. Handle false positives intelligently — if a 
    well known site like GeeksForGeeks, Wikipedia, 
    YouTube is flagged, explain it is likely safe 
    but has features that triggered the detector
-3. If a brand new website is flagged, explain that 
+4. If a brand new website is flagged, explain that 
    new sites naturally have low page rank and domain 
    age which can trigger false positives
-4. Give practical safety advice the user can act on
-5. Answer any follow up questions about phishing, 
+5. Give practical safety advice the user can act on
+6. Answer any follow up questions about phishing, 
    cybersecurity, or URL safety
-6. Never be overly technical — explain like talking 
+7. Never be overly technical — explain like talking 
    to a non-technical person
 
 Always be helpful, honest, and clear.
-Keep responses under 200 words.
+Keep responses under 250 words.
 Never say you cannot help."""
 
 
@@ -112,10 +113,11 @@ it clearly to me:
 {url_context}
 
 Tell me:
-1. Why was this verdict given?
-2. Which features are most concerning or reassuring?
-3. What should I do — is it safe to visit?
-4. Could this be a false positive?
+1. What is the likely description and category of this website based on the URL?
+2. Why was this verdict given?
+3. Which features are most concerning or reassuring?
+4. What should I do — is it safe to visit?
+5. Could this be a false positive?
 """
     
     messages.append({
