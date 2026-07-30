@@ -3,11 +3,11 @@
 # Explains phishing detection results intelligently
 
 from groq import Groq
-
+import os
+GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "")
+from dotenv import load_dotenv
+load_dotenv()
 # ── Initialize Groq Client ────────────────────
-# Replace with your actual API key
-GROQ_API_KEY = "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"
-
 client = Groq(api_key=GROQ_API_KEY)
 
 
