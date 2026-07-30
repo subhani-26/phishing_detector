@@ -4,10 +4,11 @@
 
 from groq import Groq
 import os
-GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "")
 from dotenv import load_dotenv
+
 load_dotenv()
-# ── Initialize Groq Client ────────────────────
+
+GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "")
 client = Groq(api_key=GROQ_API_KEY)
 
 
