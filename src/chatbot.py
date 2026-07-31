@@ -9,33 +9,50 @@ from dotenv import load_dotenv
 load_dotenv()
 
 GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "")
-client = Groq(api_key=GROQ_API_KEY)
+
+if not GROQ_API_KEY:
+    print("WARNING: GROQ_API_KEY not found. Set it in your .env file.")
+    print("  Format: GROQ_API_KEY=gsk_your_key_here")
+
+client = Groq(api_key=GROQ_API_KEY) if GROQ_API_KEY else None
 
 
 # ── System Prompt ─────────────────────────────
-SYSTEM_PROMPT = """You are CyberGuard, an AI 
-cybersecurity assistant integrated into PhishGuard 
-— a machine learning based phishing detection system.
+SYSTEM_PROMPT = """You are PhishGuard AI, a cybersecurity 
+assistant integrated into PhishGuard — a professional 
+cybersecurity service platform.
 
-Your job is to:
-1. Provide a brief description and the likely category of the website based on the URL.
-2. Explain in simple language why a URL was flagged 
-   as phishing or legitimate
-3. Handle false positives intelligently — if a 
-   well known site like GeeksForGeeks, Wikipedia, 
-   YouTube is flagged, explain it is likely safe 
-   but has features that triggered the detector
-4. If a brand new website is flagged, explain that 
-   new sites naturally have low page rank and domain 
-   age which can trigger false positives
-5. Give practical safety advice the user can act on
-6. Answer any follow up questions about phishing, 
-   cybersecurity, or URL safety
-7. Never be overly technical — explain like talking 
-   to a non-technical person
+For every URL analyzed, you must provide:
+1. Website type classification (Educational, Financial, 
+   E-commerce, Social Media, Government, Healthcare, 
+   Technology, News, Entertainment, Unknown)
+2. Specific category (e.g. Online Learning, Banking, 
+   Shopping, Email Service, etc.)
+3. If phishing — what legitimate site it is impersonating
+4. Why the verdict was given based on URL features
+5. Practical safety advice
 
-Always be helpful, honest, and clear.
-Keep responses under 250 words.
+Always structure your response like this:
+
+WEBSITE TYPE: [type]
+CATEGORY: [specific category]
+[If phishing] IMPERSONATING: [target brand/site]
+ANALYSIS: [explanation of verdict]
+ADVICE: [what user should do]
+
+IMPORTANT SERVICE GUIDANCE:
+If the user says they are unsure, unsatisfied, confused, 
+or wants human help:
+1. Acknowledge their concern
+2. Explicitly tell them to click the "📞 Contact Admin" 
+   button that appears right below the verdict
+3. Mention that the PhishGuard Team (phishguard@support.com) 
+   will manually investigate the URL
+4. Describe the service: WHOIS lookup, VirusTotal cross-check, 
+   detailed security report, and personalized safety advice
+5. Mention the 24-hour response time
+
+Be clear, simple, and helpful. Under 200 words total.
 Never say you cannot help."""
 
 
@@ -55,7 +72,11 @@ def get_chatbot_response(url: str,
     Returns:
         str: AI generated explanation
     """
-    
+    if not client:
+        return ("WEBSITE TYPE: Unknown\nCATEGORY: Unknown\n"
+                "ANALYSIS: AI analysis unavailable — GROQ_API_KEY not configured.\n"
+                "ADVICE: Please set your API key in the .env file.")
+
     # Extract result details
     features   = result['features']
     warnings   = result['warnings']
@@ -98,26 +119,29 @@ Security Warnings Generated:
     
     # Build user message
     if user_question:
-        # Follow up question — include context
         user_message = f"""
-{url_context}
+    {url_context}
 
-My question: {user_question}
-"""
+    My question: {user_question}
+    """
     else:
-        # First analysis — ask for explanation
         user_message = f"""
-Please analyze this URL detection result and explain 
-it clearly to me:
+    Analyze this URL detection result:
 
-{url_context}
+    {url_context}
 
-Tell me:
-1. What is the likely description and category of this website based on the URL?
-2. Why was this verdict given?
-3. Which features are most concerning or reassuring?
-4. What should I do — is it safe to visit?
-5. Could this be a false positive?
+Please provide:
+1. What TYPE of website this appears to be
+   (Educational/Financial/E-commerce/Social Media/
+   Government/Healthcare/Technology/News/Entertainment)
+2. Specific CATEGORY within that type
+3. If phishing - what site is it IMPERSONATING?
+4. WHY was this verdict given?
+5. What should the user DO?
+
+Format your response starting with:
+WEBSITE TYPE: ...
+CATEGORY: ...
 """
     
     messages.append({
@@ -152,7 +176,9 @@ def explain_feature(feature_name: str) -> str:
     Returns:
         str: Simple explanation of the feature
     """
-    
+    if not client:
+        return f"AI unavailable. '{feature_name}' is a URL feature used in phishing detection."
+
     response = client.chat.completions.create(
         model="llama-3.3-70b-versatile",
         messages=[
@@ -189,7 +215,9 @@ def get_safety_advice(verdict: str,
     Returns:
         str: Safety advice
     """
-    
+    if not client:
+        return "AI unavailable. Exercise caution with unfamiliar URLs."
+
     response = client.chat.completions.create(
         model="llama-3.3-70b-versatile",
         messages=[
