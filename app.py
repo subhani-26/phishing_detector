@@ -119,6 +119,122 @@ html, body, [class*="css"] {
 .pg-metric-value { font-size: 1.5rem; font-weight: 600; color: #1a73e8; margin: 0; }
 .pg-metric-label { font-size: 0.75rem; color: #6c757d; margin: 4px 0 0 0; text-transform: uppercase; letter-spacing: 0.04em; }
 
+/* ── Support / service section ── */
+.pg-support-card { background: #f8fbff; border: 1px solid #dbeafe; border-radius: 12px; padding: 1rem 1.1rem; }
+.pg-support-title { font-size: 0.9rem; font-weight: 600; color: #1a1a2e; margin: 0 0 6px 0; }
+.pg-support-body  { font-size: 0.82rem; color: #4b5563; line-height: 1.6; margin: 0 0 10px 0; }
+.pg-support-list  { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.pg-support-pill  { background: #ffffff; border: 1px solid #dbeafe; border-radius: 999px; padding: 5px 10px; font-size: 0.74rem; color: #1d4ed8; font-weight: 500; }
+.pg-support-details { background: #ffffff; border: 1px solid #e9ecef; border-radius: 12px; padding: 0.9rem 1rem; margin-top: 10px; }
+.pg-support-row { font-size: 0.82rem; color: #495057; padding: 4px 0; }
+
+/* ── Contact Admin button ── */
+.pg-contact-btn {
+    background: linear-gradient(135deg, #1a73e8 0%, #1557b0 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 20px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(26, 115, 232, 0.25);
+}
+.pg-contact-btn:hover { box-shadow: 0 4px 16px rgba(26, 115, 232, 0.35); transform: translateY(-1px); }
+
+/* ── Admin profile card ── */
+.pg-admin-card {
+    background: linear-gradient(135deg, #f8fbff 0%, #eef4ff 100%);
+    border: 1px solid #dbeafe;
+    border-radius: 14px;
+    padding: 1.25rem;
+    margin-top: 12px;
+}
+.pg-admin-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 14px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #dbeafe;
+}
+.pg-admin-avatar {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #1a73e8, #1557b0);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem; color: white; font-weight: 700;
+}
+.pg-admin-name { font-size: 0.95rem; font-weight: 600; color: #1a1a2e; margin: 0; }
+.pg-admin-role { font-size: 0.78rem; color: #6c757d; margin: 2px 0 0; }
+.pg-admin-info-row {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 0; font-size: 0.82rem; color: #495057;
+    border-bottom: 1px solid #f1f3f4;
+}
+.pg-admin-info-row:last-child { border-bottom: none; }
+.pg-admin-info-icon { font-size: 1rem; width: 22px; text-align: center; }
+.pg-admin-info-label { font-weight: 500; color: #6c757d; min-width: 90px; }
+.pg-admin-info-value { color: #1a1a2e; font-weight: 500; }
+
+/* ── Service tier cards ── */
+.pg-service-tier {
+    background: #ffffff;
+    border: 1px solid #e9ecef;
+    border-radius: 14px;
+    padding: 1.25rem;
+    text-align: center;
+    transition: all 0.2s ease;
+    height: 100%;
+}
+.pg-service-tier:hover { border-color: #1a73e8; box-shadow: 0 4px 16px rgba(26,115,232,0.1); }
+.pg-service-tier-active { border-color: #1a73e8; background: linear-gradient(135deg, #f8fbff 0%, #eef4ff 100%); }
+.pg-tier-icon { font-size: 2rem; margin-bottom: 8px; }
+.pg-tier-name { font-size: 0.95rem; font-weight: 600; color: #1a1a2e; margin: 0 0 4px; }
+.pg-tier-price { font-size: 0.78rem; color: #1a73e8; font-weight: 600; margin: 0 0 10px; }
+.pg-tier-desc { font-size: 0.8rem; color: #6c757d; line-height: 1.6; margin: 0 0 12px; }
+.pg-tier-features { text-align: left; padding: 0; margin: 0; list-style: none; }
+.pg-tier-features li { font-size: 0.78rem; color: #495057; padding: 4px 0; display: flex; align-items: center; gap: 6px; }
+.pg-tier-features li::before { content: '✓'; color: #38a169; font-weight: 700; font-size: 0.75rem; }
+
+/* ── Service process steps ── */
+.pg-service-step {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid #f1f3f4;
+}
+.pg-service-step:last-child { border-bottom: none; }
+.pg-step-num {
+    width: 32px; height: 32px; min-width: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #1a73e8, #1557b0);
+    color: white; font-size: 0.78rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+}
+.pg-step-content { flex: 1; }
+.pg-step-title { font-size: 0.85rem; font-weight: 600; color: #1a1a2e; margin: 0 0 3px; }
+.pg-step-desc { font-size: 0.78rem; color: #6c757d; margin: 0; line-height: 1.5; }
+
+/* ── Confirmation box ── */
+.pg-confirmation {
+    background: linear-gradient(135deg, #f0fff4 0%, #e6ffed 100%);
+    border: 1px solid #68d391;
+    border-radius: 12px;
+    padding: 1.25rem;
+    text-align: center;
+}
+.pg-confirmation-icon { font-size: 2.5rem; margin-bottom: 8px; }
+.pg-confirmation-title { font-size: 1rem; font-weight: 600; color: #276749; margin: 0 0 6px; }
+.pg-confirmation-ref { font-size: 0.82rem; color: #38a169; font-weight: 500; margin: 0 0 10px; }
+.pg-confirmation-body { font-size: 0.8rem; color: #4b5563; line-height: 1.6; margin: 0; }
+
 /* ── Progress bar ── */
 .pg-bar-wrap      { background: #e9ecef; border-radius: 99px; height: 6px; overflow: hidden; margin: 6px 0; }
 .pg-bar-fill-blue  { background: #1a73e8; height: 100%; border-radius: 99px; }
@@ -173,7 +289,6 @@ html, body, [class*="css"] {
 .pg-section-label { font-size: 0.75rem; font-weight: 500; color: #6c757d; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 10px 0; }
 
 /* ── Hide Streamlit chrome ── */
-/* ── Hide Streamlit chrome ── */
 #MainMenu                  { visibility: hidden; }
 footer                     { visibility: hidden; }
 header                     { visibility: hidden; }
@@ -209,7 +324,7 @@ with st.sidebar:
             <span style='font-size:1.3rem;'>🛡️</span>
             <div>
                 <p style='font-size:0.95rem; font-weight:600; color:#1a1a2e; margin:0;'>PhishGuard</p>
-                <p style='font-size:0.72rem; color:#6c757d; margin:0;'>ML Phishing Detector</p>
+                <p style='font-size:0.72rem; color:#6c757d; margin:0;'>Cybersecurity Service</p>
             </div>
         </div>
     </div>
@@ -220,6 +335,7 @@ with st.sidebar:
     page = st.radio(
         "Navigation",
         ["🔍  URL Scanner",
+         "🛡️  Our Services",
          "📊  Model Dashboard",
          "📚  How It Works"],
         label_visibility="collapsed"
@@ -239,7 +355,8 @@ with st.sidebar:
 
 # ── Page Header ───────────────────────────────
 page_titles = {
-    "🔍  URL Scanner":     ("URL Scanner",    "Analyze any URL for phishing indicators"),
+    "🔍  URL Scanner":     ("URL Scanner",    "Detect threats and access expert support"),
+    "🛡️  Our Services":    ("Our Services",   "Professional cybersecurity services"),
     "📊  Model Dashboard": ("Model Dashboard", "Performance metrics and visualizations"),
     "📚  How It Works":    ("How It Works",    "Understand the detection pipeline"),
 }
@@ -266,7 +383,11 @@ if page == "🔍  URL Scanner":
     for key, val in {
         'url_input': "", 'messages': [],
         'chat_result': None, 'chat_url': "",
-        'show_chat': False, 'analyzed': False
+        'show_chat': False, 'show_contact': False,
+        'contact_name': "", 'contact_email': "",
+        'contact_url': "", 'contact_message': "",
+        'contact_urgency': "Medium",
+        'contact_submitted': False, 'analyzed': False
     }.items():
         if key not in st.session_state:
             st.session_state[key] = val
@@ -327,6 +448,7 @@ if page == "🔍  URL Scanner":
         box_cls     = "pg-result-phishing" if is_phish else "pg-result-safe"
         verdict_cls = "pg-verdict-phishing" if is_phish else "pg-verdict-safe"
         icon        = "🚨" if is_phish else "✅"
+        bar_cls     = "pg-bar-fill-blue" if is_phish else "pg-bar-fill-green"
 
         st.divider()
 
@@ -349,7 +471,7 @@ if page == "🔍  URL Scanner":
                 <p style='font-size:1.8rem; font-weight:600;
                            color:{"#c53030" if is_phish else "#276749"}; margin:0;'>{conf}%</p>
                 <div class="pg-bar-wrap">
-                    <div class="{"pg-bar-fill-blue" if is_phish else "pg-bar-fill-green"}"
+                    <div class="{bar_cls}"
                          style='width:{conf}%;'></div>
                 </div>
                 <div style='display:flex; justify-content:space-between;
@@ -359,6 +481,85 @@ if page == "🔍  URL Scanner":
                 </div>
             </div>
             """, unsafe_allow_html=True)
+
+        # ── Contact Admin Button (right after verdict) ──
+        if st.button("📞  Not satisfied? Contact our team for manual investigation", key="contact_admin_btn", use_container_width=True):
+            st.session_state.show_contact = not st.session_state.show_contact
+            st.rerun()
+
+        if st.session_state.show_contact:
+            st.markdown("""
+            <div class="pg-admin-card">
+                <div class="pg-admin-header">
+                    <div class="pg-admin-avatar">PG</div>
+                    <div>
+                        <p class="pg-admin-name">PhishGuard Team</p>
+                        <p class="pg-admin-role">Cybersecurity Service Team</p>
+                    </div>
+                </div>
+                <div class="pg-admin-info-row">
+                    <span class="pg-admin-info-icon">👥</span>
+                    <span class="pg-admin-info-label">Team</span>
+                    <span class="pg-admin-info-value">PhishGuard Team</span>
+                </div>
+                <div class="pg-admin-info-row">
+                    <span class="pg-admin-info-icon">📧</span>
+                    <span class="pg-admin-info-label">Email</span>
+                    <span class="pg-admin-info-value">phishguard@support.com</span>
+                </div>
+                <div class="pg-admin-info-row">
+                    <span class="pg-admin-info-icon">⏱️</span>
+                    <span class="pg-admin-info-label">Response</span>
+                    <span class="pg-admin-info-value">Within 24 hours</span>
+                </div>
+                <div class="pg-admin-info-row">
+                    <span class="pg-admin-info-icon">🛡️</span>
+                    <span class="pg-admin-info-label">Service</span>
+                    <span class="pg-admin-info-value">Manual investigation, WHOIS lookup, VirusTotal check, detailed security report</span>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+            # ── Service Request Form ──
+            st.markdown('<p class="pg-section-label" style="margin-top:14px;">Submit a service request</p>', unsafe_allow_html=True)
+            with st.form("service_request_form"):
+                sr_col1, sr_col2 = st.columns(2)
+                with sr_col1:
+                    contact_name = st.text_input("Your full name", placeholder="e.g. John Doe")
+                with sr_col2:
+                    contact_email = st.text_input("Your email", placeholder="e.g. john@example.com")
+
+                contact_url = st.text_input("URL to investigate", value=st.session_state.chat_url)
+                contact_message = st.text_area("Describe your concern", placeholder="Tell us why you need manual investigation...")
+                contact_urgency = st.select_slider("Urgency level", options=["Low", "Medium", "High"], value="Medium")
+
+                submitted = st.form_submit_button("🚀 Submit Service Request", use_container_width=True)
+                if submitted:
+                    if contact_name and contact_email and contact_message:
+                        st.session_state.contact_submitted = True
+                        st.session_state.contact_name = contact_name
+                        st.session_state.contact_email = contact_email
+                        st.session_state.contact_url = contact_url
+                        st.session_state.contact_message = contact_message
+                        st.session_state.contact_urgency = contact_urgency
+                    else:
+                        st.warning("Please fill in your name, email, and describe your concern.")
+
+            if st.session_state.contact_submitted:
+                import hashlib, time
+                ref_id = "PG-" + hashlib.md5(f"{st.session_state.contact_email}{time.time()}".encode()).hexdigest()[:8].upper()
+                st.markdown(f"""
+                <div class="pg-confirmation">
+                    <div class="pg-confirmation-icon">✅</div>
+                    <p class="pg-confirmation-title">Service Request Submitted</p>
+                    <p class="pg-confirmation-ref">Reference: {ref_id}</p>
+                    <p class="pg-confirmation-body">
+                        Our team will manually investigate <strong>{st.session_state.contact_url}</strong>
+                        and send a detailed security report to <strong>{st.session_state.contact_email}</strong> within 24 hours.<br><br>
+                        <strong>Service workflow:</strong> AI scan → Contact admin → Manual investigation → WHOIS & VirusTotal check → Detailed report → Personalized advice
+                    </p>
+                </div>
+                """, unsafe_allow_html=True)
 
         st.divider()
 
@@ -379,10 +580,57 @@ if page == "🔍  URL Scanner":
                 st.session_state.show_chat = not st.session_state.show_chat
                 st.rerun()
 
-        # Auto AI explanation
+        # Auto AI explanation with website type highlighting
         if st.session_state.messages:
+            ai_response = st.session_state.messages[0]["content"]
+
+            # Parse website type and category from response
+            website_type = "Unknown"
+            category     = "Unknown"
+
+            for line in ai_response.split('\n'):
+                if line.startswith("WEBSITE TYPE:"):
+                    website_type = line.replace("WEBSITE TYPE:", "").strip()
+                if line.startswith("CATEGORY:"):
+                    category = line.replace("CATEGORY:", "").strip()
+
+            # Color based on type
+            type_colors = {
+                "Educational":   ("#e8f5e9", "#2e7d32"),
+                "Financial":     ("#fff3e0", "#e65100"),
+                "E-commerce":    ("#e3f2fd", "#1565c0"),
+                "Social Media":  ("#f3e5f5", "#6a1b9a"),
+                "Government":    ("#e8eaf6", "#283593"),
+                "Healthcare":    ("#fce4ec", "#880e4f"),
+                "Technology":    ("#e0f7fa", "#006064"),
+                "News":          ("#f9fbe7", "#558b2f"),
+                "Entertainment": ("#fff8e1", "#f57f17"),
+            }
+            bg, fg = type_colors.get(
+                website_type, ("#f5f5f5", "#333333")
+            )
+
+            # Show website type badge
+            st.markdown(f"""
+            <div style='display:flex; gap:8px; margin-bottom:10px;
+                        flex-wrap:wrap;'>
+                <div style='background:{bg}; color:{fg};
+                        padding:6px 14px; border-radius:20px;
+                        font-size:0.78rem; font-weight:600;
+                        border:1px solid {fg}30;'>
+                    {website_type}
+                </div>
+                <div style='background:#f1f3f4; color:#495057;
+                        padding:6px 14px; border-radius:20px;
+                        font-size:0.78rem; font-weight:500;'>
+                    {category}
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+            # Show full AI response
             st.markdown(
-                f'<div class="pg-bubble-bot">{st.session_state.messages[0]["content"]}</div>',
+                f'<div class="pg-bubble-bot">{ai_response}</div>',
                 unsafe_allow_html=True
             )
 
@@ -505,14 +753,206 @@ if page == "🔍  URL Scanner":
                 f'<div class="pg-card" style="margin-bottom:0;">{warnings_html}</div>',
                 unsafe_allow_html=True
             )
-            if is_phish:
-                st.error("Do not visit this website.")
-            else:
-                st.success("This URL appears safe to visit.")
+
+        if is_phish:
+            st.error("Do not visit this website.")
+        else:
+            st.success("This URL appears safe to visit.")
 
 
 # ════════════════════════════════════════════
-# PAGE 2 — MODEL DASHBOARD
+# PAGE 2 — OUR SERVICES
+# ════════════════════════════════════════════
+elif page == "🛡️  Our Services":
+
+    # ── Service Introduction ──
+    st.markdown("""
+    <div class="pg-card">
+        <div style='display:flex; align-items:center; gap:10px; margin-bottom:12px;'>
+            <span style='font-size:1.5rem;'>🏢</span>
+            <div>
+                <p style='font-size:1rem; font-weight:600; color:#1a1a2e; margin:0;'>PhishGuard Cybersecurity Services</p>
+                <p style='font-size:0.8rem; color:#6c757d; margin:2px 0 0;'>Professional URL threat analysis and cybersecurity consulting</p>
+            </div>
+        </div>
+        <p class="pg-support-body" style='margin-bottom:0;'>
+            PhishGuard is more than a detection tool — we are a cybersecurity service team.
+            Our AI-powered scanner provides instant results, and when you need deeper analysis,
+            our team manually investigates suspicious URLs, performs WHOIS and VirusTotal lookups,
+            and delivers detailed security reports with actionable advice.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # ── Service Tiers ──
+    st.markdown('<p class="pg-section-label">Service tiers</p>', unsafe_allow_html=True)
+    tier1, tier2, tier3 = st.columns(3)
+
+    with tier1:
+        st.markdown("""
+        <div class="pg-service-tier">
+            <div class="pg-tier-icon">🔍</div>
+            <p class="pg-tier-name">Free Scan</p>
+            <p class="pg-tier-price">Always Free</p>
+            <p class="pg-tier-desc">AI-powered instant URL scanning with phishing detection and risk assessment.</p>
+            <ul class="pg-tier-features">
+                <li>AI-powered URL analysis</li>
+                <li>Phishing probability score</li>
+                <li>Risk level assessment</li>
+                <li>AI chatbot explanation</li>
+                <li>Security warnings</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with tier2:
+        st.markdown("""
+        <div class="pg-service-tier pg-service-tier-active">
+            <div class="pg-tier-icon">🛡️</div>
+            <p class="pg-tier-name">Professional Investigation</p>
+            <p class="pg-tier-price">On Request</p>
+            <p class="pg-tier-desc">Manual deep-dive by our security team with comprehensive threat analysis and report.</p>
+            <ul class="pg-tier-features">
+                <li>Everything in Free Scan</li>
+                <li>Manual URL investigation</li>
+                <li>WHOIS domain lookup</li>
+                <li>VirusTotal cross-check</li>
+                <li>Detailed security report</li>
+                <li>Personalized safety advice</li>
+                <li>24-hour response time</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with tier3:
+        st.markdown("""
+        <div class="pg-service-tier">
+            <div class="pg-tier-icon">📋</div>
+            <p class="pg-tier-name">Enterprise</p>
+            <p class="pg-tier-price">Coming Soon</p>
+            <p class="pg-tier-desc">Ongoing monitoring and priority support for organizations with bulk URL scanning needs.</p>
+            <ul class="pg-tier-features">
+                <li>Everything in Professional</li>
+                <li>Bulk URL scanning</li>
+                <li>Priority support</li>
+                <li>API access</li>
+                <li>Custom threat reports</li>
+                <li>Ongoing monitoring</li>
+                <li>Dedicated account manager</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
+
+    st.divider()
+
+    # ── How Our Service Works ──
+    st.markdown('<p class="pg-section-label">How our service works</p>', unsafe_allow_html=True)
+    st.markdown("""
+    <div class="pg-card">
+        <div class="pg-service-step">
+            <div class="pg-step-num">1</div>
+            <div class="pg-step-content">
+                <p class="pg-step-title">Submit a Suspicious URL</p>
+                <p class="pg-step-desc">Paste any URL into our scanner. Our AI model analyzes 15 URL features and gives an instant verdict with confidence score.</p>
+            </div>
+        </div>
+        <div class="pg-service-step">
+            <div class="pg-step-num">2</div>
+            <div class="pg-step-content">
+                <p class="pg-step-title">Get AI-Powered Analysis</p>
+                <p class="pg-step-desc">Our Random Forest model (90.09% accuracy) classifies the URL, and PhishGuard AI explains why it was flagged or cleared.</p>
+            </div>
+        </div>
+        <div class="pg-service-step">
+            <div class="pg-step-num">3</div>
+            <div class="pg-step-content">
+                <p class="pg-step-title">Not Satisfied? Contact Our Team</p>
+                <p class="pg-step-desc">If the AI result feels unclear or you want deeper analysis, click the "Contact Admin" button to reach our cybersecurity team.</p>
+            </div>
+        </div>
+        <div class="pg-service-step">
+            <div class="pg-step-num">4</div>
+            <div class="pg-step-content">
+                <p class="pg-step-title">Manual Investigation</p>
+                <p class="pg-step-desc">Our team performs WHOIS domain lookup, VirusTotal cross-reference, manual URL inspection, and threat intelligence analysis.</p>
+            </div>
+        </div>
+        <div class="pg-service-step">
+            <div class="pg-step-num">5</div>
+            <div class="pg-step-content">
+                <p class="pg-step-title">Detailed Security Report</p>
+                <p class="pg-step-desc">You receive a comprehensive report with findings, risk assessment, evidence screenshots, and clear recommendations.</p>
+            </div>
+        </div>
+        <div class="pg-service-step">
+            <div class="pg-step-num">6</div>
+            <div class="pg-step-content">
+                <p class="pg-step-title">Personalized Safety Advice</p>
+                <p class="pg-step-desc">We provide tailored advice based on your specific situation — whether to block, report, or safely proceed with the URL.</p>
+            </div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.divider()
+
+    # ── Our Team ──
+    st.markdown('<p class="pg-section-label">Our team</p>', unsafe_allow_html=True)
+    st.markdown("""
+    <div class="pg-admin-card">
+        <div class="pg-admin-header">
+            <div class="pg-admin-avatar">PG</div>
+            <div>
+                <p class="pg-admin-name">PhishGuard Team</p>
+                <p class="pg-admin-role">Cybersecurity Service Team</p>
+            </div>
+        </div>
+        <div class="pg-admin-info-row">
+            <span class="pg-admin-info-icon">👥</span>
+            <span class="pg-admin-info-label">Team</span>
+            <span class="pg-admin-info-value">PhishGuard Team</span>
+        </div>
+        <div class="pg-admin-info-row">
+            <span class="pg-admin-info-icon">📧</span>
+            <span class="pg-admin-info-label">Email</span>
+            <span class="pg-admin-info-value">phishguard@support.com</span>
+        </div>
+        <div class="pg-admin-info-row">
+            <span class="pg-admin-info-icon">⏱️</span>
+            <span class="pg-admin-info-label">Response</span>
+            <span class="pg-admin-info-value">Within 24 hours</span>
+        </div>
+        <div class="pg-admin-info-row">
+            <span class="pg-admin-info-icon">🛡️</span>
+            <span class="pg-admin-info-label">Services</span>
+            <span class="pg-admin-info-value">URL investigation, WHOIS lookup, VirusTotal analysis, security reports, safety consulting</span>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.divider()
+
+    # ── Contact Us (on Services page) ──
+    st.markdown('<p class="pg-section-label">Get in touch</p>', unsafe_allow_html=True)
+    st.markdown("""
+    <div class="pg-support-card">
+        <p class="pg-support-title">Ready for professional cybersecurity service?</p>
+        <p class="pg-support-body">
+            Scan a URL on the URL Scanner page first. If you're not satisfied with the AI result,
+            click the "Contact Admin" button to submit a service request. Or reach out to us directly:
+        </p>
+        <div class="pg-support-list">
+            <span class="pg-support-pill">📧 phishguard@support.com</span>
+            <span class="pg-support-pill">⏱️ 24-hour response</span>
+            <span class="pg-support-pill">🔍 Manual investigation</span>
+            <span class="pg-support-pill">📄 Detailed reports</span>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+
+# ════════════════════════════════════════════
+# PAGE 3 — MODEL DASHBOARD
 # ════════════════════════════════════════════
 elif page == "📊  Model Dashboard":
 
@@ -581,7 +1021,7 @@ elif page == "📊  Model Dashboard":
 
 
 # ════════════════════════════════════════════
-# PAGE 3 — HOW IT WORKS
+# PAGE 4 — HOW IT WORKS
 # ════════════════════════════════════════════
 elif page == "📚  How It Works":
 
