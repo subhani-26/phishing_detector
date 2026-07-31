@@ -17,7 +17,7 @@ sys.path.insert(0, '.')
 from src.feature_extraction import load_and_select_features
 from src.data_processing import check_data_quality, clean_data, split_and_scale
 
-
+#used for getting models
 def get_models() -> dict:
     """
     Define all 4 models we want to compare.
@@ -136,8 +136,10 @@ if __name__ == "__main__":
         best_name
     )
 
+    
     # Save results for Streamlit dashboard
     import json
     with open("models/evaluation_results.json", "w") as f:
         json.dump(results, f, indent=2)
     print("\nEvaluation results saved.")
+    

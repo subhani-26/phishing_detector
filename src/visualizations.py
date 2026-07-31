@@ -106,6 +106,7 @@ def plot_feature_importance(model, feature_names: list):
     ax.barh(range(len(indices)),
             importances[indices],
             color=colors, edgecolor='white')
+    
 
     ax.set_yticks(range(len(indices)))
     ax.set_yticklabels([feature_names[i] for i in indices], fontsize=10)
