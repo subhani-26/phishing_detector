@@ -46,7 +46,7 @@ or wants human help:
 1. Acknowledge their concern
 2. Explicitly tell them to click the "📞 Contact Admin" 
    button that appears right below the verdict
-3. Mention that the PhishGuard Team (phishguard@support.com) 
+3. Mention that the PhishGuard Team (phishguardteam@gmail.com) 
    will manually investigate the URL
 4. Describe the service: WHOIS lookup, VirusTotal cross-check, 
    detailed security report, and personalized safety advice

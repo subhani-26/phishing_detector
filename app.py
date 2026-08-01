@@ -3,10 +3,16 @@
 import json
 import sys
 import os
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 import streamlit as st
 import matplotlib
 matplotlib.use('Agg')
 import pandas as pd
+from dotenv import load_dotenv
+
+load_dotenv()
 
 sys.path.insert(0, '.')
 from src.prediction import predict
@@ -20,6 +26,85 @@ from src.chatbot import (
 )
 
 groq_client = Groq(api_key=GROQ_API_KEY)
+
+# ── Gmail SMTP Configuration ─────────────────
+GMAIL_ADDRESS = os.getenv("GMAIL_ADDRESS", "phishguardteam@gmail.com")
+GMAIL_APP_PASSWORD = os.getenv("GMAIL_APP_PASSWORD", "")
+
+
+def send_service_request_email(ref_id, name, email, url, message, urgency, scan_result=None):
+    """Send service request notification email to the PhishGuard team via Gmail SMTP."""
+    if not GMAIL_APP_PASSWORD or GMAIL_APP_PASSWORD == "paste_your_16_char_app_password_here":
+        return False, "Gmail App Password not configured in .env file."
+
+    try:
+        # Build the email content
+        scan_info = ""
+        if scan_result:
+            verdict = scan_result.get('prediction', 'N/A')
+            confidence = scan_result.get('confidence', 'N/A')
+            risk = scan_result.get('risk_level', 'N/A')
+            scan_info = f"""
+        <tr><td style="padding:8px 12px; font-weight:600; color:#6c757d; border-bottom:1px solid #f1f3f4;">AI Verdict</td>
+            <td style="padding:8px 12px; border-bottom:1px solid #f1f3f4;">{verdict}</td></tr>
+        <tr><td style="padding:8px 12px; font-weight:600; color:#6c757d; border-bottom:1px solid #f1f3f4;">Confidence</td>
+            <td style="padding:8px 12px; border-bottom:1px solid #f1f3f4;">{confidence}%</td></tr>
+        <tr><td style="padding:8px 12px; font-weight:600; color:#6c757d; border-bottom:1px solid #f1f3f4;">Risk Level</td>
+            <td style="padding:8px 12px; border-bottom:1px solid #f1f3f4;">{risk}</td></tr>"""
+
+        html_body = f"""
+        <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width:600px; margin:0 auto;">
+            <div style="background:linear-gradient(135deg,#1a73e8,#1557b0); padding:20px 24px; border-radius:12px 12px 0 0;">
+                <h2 style="color:white; margin:0; font-size:1.1rem;">🛡️ PhishGuard — New Service Request</h2>
+                <p style="color:rgba(255,255,255,0.85); margin:4px 0 0; font-size:0.85rem;">Reference: {ref_id}</p>
+            </div>
+            <div style="background:#ffffff; border:1px solid #e9ecef; border-top:none; border-radius:0 0 12px 12px; padding:20px 24px;">
+                <table style="width:100%; border-collapse:collapse; font-size:0.9rem;">
+                    <tr><td style="padding:8px 12px; font-weight:600; color:#6c757d; border-bottom:1px solid #f1f3f4;">Requester</td>
+                        <td style="padding:8px 12px; border-bottom:1px solid #f1f3f4;">{name}</td></tr>
+                    <tr><td style="padding:8px 12px; font-weight:600; color:#6c757d; border-bottom:1px solid #f1f3f4;">Email</td>
+                        <td style="padding:8px 12px; border-bottom:1px solid #f1f3f4;"><a href="mailto:{email}">{email}</a></td></tr>
+                    <tr><td style="padding:8px 12px; font-weight:600; color:#6c757d; border-bottom:1px solid #f1f3f4;">URL to Investigate</td>
+                        <td style="padding:8px 12px; border-bottom:1px solid #f1f3f4; word-break:break-all;">{url}</td></tr>
+                    <tr><td style="padding:8px 12px; font-weight:600; color:#6c757d; border-bottom:1px solid #f1f3f4;">Urgency</td>
+                        <td style="padding:8px 12px; border-bottom:1px solid #f1f3f4;">
+                            <span style="padding:3px 10px; border-radius:20px; font-size:0.78rem; font-weight:600;
+                                background:{'#fed7d7' if urgency=='High' else '#fefcbf' if urgency=='Medium' else '#c6f6d5'};
+                                color:{'#c53030' if urgency=='High' else '#b7791f' if urgency=='Medium' else '#276749'};">{urgency}</span>
+                        </td></tr>
+                    {scan_info}
+                    <tr><td style="padding:8px 12px; font-weight:600; color:#6c757d; vertical-align:top;">Concern</td>
+                        <td style="padding:8px 12px; line-height:1.6;">{message}</td></tr>
+                </table>
+                <div style="margin-top:16px; padding:12px; background:#f8f9fa; border-radius:8px; font-size:0.82rem; color:#6c757d;">
+                    ⚡ Reply directly to this email to respond to the requester at <strong>{email}</strong>
+                </div>
+            </div>
+        </div>
+        """
+
+        msg = MIMEMultipart("alternative")
+        msg["Subject"] = f"🛡️ [{urgency} Priority] Service Request {ref_id} — {url[:60]}"
+        msg["From"] = GMAIL_ADDRESS
+        msg["To"] = GMAIL_ADDRESS
+        msg["Reply-To"] = email  # Reply goes to the requester
+
+        # Plain text fallback
+        plain_text = f"""PhishGuard Service Request\n\nRef: {ref_id}\nFrom: {name} ({email})\nURL: {url}\nUrgency: {urgency}\nConcern: {message}"""
+        msg.attach(MIMEText(plain_text, "plain"))
+        msg.attach(MIMEText(html_body, "html"))
+
+        # Send via Gmail SMTP
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+            server.login(GMAIL_ADDRESS, GMAIL_APP_PASSWORD)
+            server.send_message(msg)
+
+        return True, "Email sent successfully."
+
+    except smtplib.SMTPAuthenticationError:
+        return False, "Gmail authentication failed. Check your App Password in .env file."
+    except Exception as e:
+        return False, f"Failed to send email: {str(e)}"
 
 # ── Page config ───────────────────────────────
 st.set_page_config(
@@ -505,7 +590,7 @@ if page == "🔍  URL Scanner":
                 <div class="pg-admin-info-row">
                     <span class="pg-admin-info-icon">📧</span>
                     <span class="pg-admin-info-label">Email</span>
-                    <span class="pg-admin-info-value">phishguard@support.com</span>
+                    <span class="pg-admin-info-value">phishguardteam@gmail.com</span>
                 </div>
                 <div class="pg-admin-info-row">
                     <span class="pg-admin-info-icon">⏱️</span>
@@ -536,30 +621,63 @@ if page == "🔍  URL Scanner":
                 submitted = st.form_submit_button("🚀 Submit Service Request", use_container_width=True)
                 if submitted:
                     if contact_name and contact_email and contact_message:
+                        import hashlib, time
+                        ref_id = "PG-" + hashlib.md5(f"{contact_email}{time.time()}".encode()).hexdigest()[:8].upper()
+
+                        # Send email to PhishGuard team
+                        email_sent, email_msg = send_service_request_email(
+                            ref_id=ref_id,
+                            name=contact_name,
+                            email=contact_email,
+                            url=contact_url,
+                            message=contact_message,
+                            urgency=contact_urgency,
+                            scan_result=st.session_state.chat_result
+                        )
+
                         st.session_state.contact_submitted = True
                         st.session_state.contact_name = contact_name
                         st.session_state.contact_email = contact_email
                         st.session_state.contact_url = contact_url
                         st.session_state.contact_message = contact_message
                         st.session_state.contact_urgency = contact_urgency
+                        st.session_state.contact_ref_id = ref_id
+                        st.session_state.contact_email_sent = email_sent
+                        st.session_state.contact_email_msg = email_msg
                     else:
                         st.warning("Please fill in your name, email, and describe your concern.")
 
             if st.session_state.contact_submitted:
-                import hashlib, time
-                ref_id = "PG-" + hashlib.md5(f"{st.session_state.contact_email}{time.time()}".encode()).hexdigest()[:8].upper()
-                st.markdown(f"""
-                <div class="pg-confirmation">
-                    <div class="pg-confirmation-icon">✅</div>
-                    <p class="pg-confirmation-title">Service Request Submitted</p>
-                    <p class="pg-confirmation-ref">Reference: {ref_id}</p>
-                    <p class="pg-confirmation-body">
-                        Our team will manually investigate <strong>{st.session_state.contact_url}</strong>
-                        and send a detailed security report to <strong>{st.session_state.contact_email}</strong> within 24 hours.<br><br>
-                        <strong>Service workflow:</strong> AI scan → Contact admin → Manual investigation → WHOIS & VirusTotal check → Detailed report → Personalized advice
-                    </p>
-                </div>
-                """, unsafe_allow_html=True)
+                ref_id = st.session_state.get('contact_ref_id', 'PG-UNKNOWN')
+                email_sent = st.session_state.get('contact_email_sent', False)
+                email_msg = st.session_state.get('contact_email_msg', '')
+
+                if email_sent:
+                    st.markdown(f"""
+                    <div class="pg-confirmation">
+                        <div class="pg-confirmation-icon">✅</div>
+                        <p class="pg-confirmation-title">Service Request Submitted & Email Sent</p>
+                        <p class="pg-confirmation-ref">Reference: {ref_id}</p>
+                        <p class="pg-confirmation-body">
+                            Our team has been notified at <strong>phishguardteam@gmail.com</strong> and will manually investigate <strong>{st.session_state.contact_url}</strong>.
+                            A detailed security report will be sent to <strong>{st.session_state.contact_email}</strong> within 24 hours.<br><br>
+                            <strong>Service workflow:</strong> AI scan → Contact admin → Manual investigation → WHOIS &amp; VirusTotal check → Detailed report → Personalized advice
+                        </p>
+                    </div>
+                    """, unsafe_allow_html=True)
+                else:
+                    st.markdown(f"""
+                    <div class="pg-confirmation">
+                        <div class="pg-confirmation-icon">⚠️</div>
+                        <p class="pg-confirmation-title" style="color:#c05621;">Request Saved — Email Delivery Issue</p>
+                        <p class="pg-confirmation-ref">Reference: {ref_id}</p>
+                        <p class="pg-confirmation-body">
+                            Your service request was recorded but the email notification could not be sent.<br>
+                            <strong>Reason:</strong> {email_msg}<br><br>
+                            Please contact us directly at <strong>phishguardteam@gmail.com</strong> with your reference ID.
+                        </p>
+                    </div>
+                    """, unsafe_allow_html=True)
 
         st.divider()
 
@@ -915,7 +1033,7 @@ elif page == "🛡️  Our Services":
         <div class="pg-admin-info-row">
             <span class="pg-admin-info-icon">📧</span>
             <span class="pg-admin-info-label">Email</span>
-            <span class="pg-admin-info-value">phishguard@support.com</span>
+            <span class="pg-admin-info-value">phishguardteam@gmail.com</span>
         </div>
         <div class="pg-admin-info-row">
             <span class="pg-admin-info-icon">⏱️</span>
@@ -942,7 +1060,7 @@ elif page == "🛡️  Our Services":
             click the "Contact Admin" button to submit a service request. Or reach out to us directly:
         </p>
         <div class="pg-support-list">
-            <span class="pg-support-pill">📧 phishguard@support.com</span>
+            <span class="pg-support-pill">📧 phishguardteam@gmail.com</span>
             <span class="pg-support-pill">⏱️ 24-hour response</span>
             <span class="pg-support-pill">🔍 Manual investigation</span>
             <span class="pg-support-pill">📄 Detailed reports</span>
